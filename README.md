@@ -13,7 +13,7 @@ A visualization tool showing restaurant ranking trends over time. This pet proje
 
 - Vanilla JavaScript
 - CSS Animations
-- GSAP for advanced animations
+- GSAP for animations
 - Playwright for data collection
 - GitHub Actions for automation
 
@@ -23,5 +23,7 @@ A visualization tool showing restaurant ranking trends over time. This pet proje
 2. Open `index.html` in a browser
 
 ## Live Demo
+
+<img width="302" alt="Screenshot 2025-04-28 at 10 11 09 PM" src="https://github.com/user-attachments/assets/ef0f4e30-d754-44f8-b0fc-4f0e70688930" />
 
 Visit the [GitHub Pages site](https://yourusername.github.io/trendrezy) to see it in action. 

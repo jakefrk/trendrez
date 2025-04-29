@@ -1,0 +1,19 @@
+{
+  "name": "trendrezy",
+  "version": "1.0.0",
+  "description": "Restaurant ranking trends visualization",
+  "main": "script.js",
+  "scripts": {
+    "start": "npx serve",
+    "scrape": "node scraper.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.32.0"
+  },
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}

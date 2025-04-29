@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendRez</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include GSAP library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <div id="main-container">
+        <div id="position-numbers-container"></div>
+        <div id="restaurant-list-container">
+            <!-- Boxes will be dynamically generated here -->
+        </div>
+    </div>
+    
+    <div id="bottom-bar">
+        <div class="header-container">
+            <div class="title-container">
+                <h1>TrendRez NYC</h1>
+                <span id="date-display">Today</span>
+            </div>
+            <button id="next-day-button">
+                Play
+                <div class="pulsing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

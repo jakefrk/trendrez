@@ -1,0 +1,482 @@
+{
+  "timestamp": "2025-04-28T23:41:54.818Z",
+  "total_restaurants": 119,
+  "restaurants": [
+    {
+      "name": "Fuku Omakase",
+      "position": 8
+    },
+    {
+      "name": "Penny",
+      "position": 2
+    },
+    {
+      "name": "Shinzo Omakase",
+      "position": 3
+    },
+    {
+      "name": "SHŌSH",
+      "position": 5
+    },
+    {
+      "name": "Pastis",
+      "position": 6
+    },
+    {
+      "name": "Sushi Nakazawa NY",
+      "position": 4
+    },
+    {
+      "name": "Fedora",
+      "position": 7
+    },
+    {
+      "name": "Don Angie",
+      "position": 1
+    },
+    {
+      "name": "Rosella",
+      "position": 9
+    },
+    {
+      "name": "Foxface Natural",
+      "position": 10
+    },
+    {
+      "name": "The Corner Store",
+      "position": 11
+    },
+    {
+      "name": "Kono",
+      "position": 12
+    },
+    {
+      "name": "Sunn's",
+      "position": 13
+    },
+    {
+      "name": "Elvis",
+      "position": 14
+    },
+    {
+      "name": "Rubirosa",
+      "position": 15
+    },
+    {
+      "name": "L'Artusi",
+      "position": 16
+    },
+    {
+      "name": "I Sodi",
+      "position": 17
+    },
+    {
+      "name": "Raoul's",
+      "position": 18
+    },
+    {
+      "name": "Minetta Tavern",
+      "position": 19
+    },
+    {
+      "name": "Torrisi Bar & Restaurant",
+      "position": 20
+    },
+    {
+      "name": "Joseph Leonard",
+      "position": 21
+    },
+    {
+      "name": "Jeffrey's Grocery",
+      "position": 22
+    },
+    {
+      "name": "The Nines",
+      "position": 23
+    },
+    {
+      "name": "Claud",
+      "position": 24
+    },
+    {
+      "name": "Dame",
+      "position": 25
+    },
+    {
+      "name": "Colonie",
+      "position": 26
+    },
+    {
+      "name": "Lord's",
+      "position": 27
+    },
+    {
+      "name": "Dear Irving Gramercy",
+      "position": 28
+    },
+    {
+      "name": "Raku Soho",
+      "position": 29
+    },
+    {
+      "name": "Cervo’s",
+      "position": 30
+    },
+    {
+      "name": "Dirt Candy",
+      "position": 31
+    },
+    {
+      "name": "Fairfax",
+      "position": 32
+    },
+    {
+      "name": "The Coop at Double Chicken Please",
+      "position": 33
+    },
+    {
+      "name": "Hanoi House",
+      "position": 34
+    },
+    {
+      "name": "The Dead Rabbit New York City",
+      "position": 35
+    },
+    {
+      "name": "da Toscano",
+      "position": 36
+    },
+    {
+      "name": "Cafe Spaghetti",
+      "position": 37
+    },
+    {
+      "name": "The Mary Lane",
+      "position": 38
+    },
+    {
+      "name": "Russ & Daughters Cafe",
+      "position": 39
+    },
+    {
+      "name": "MOKYO",
+      "position": 40
+    },
+    {
+      "name": "La Vara",
+      "position": 41
+    },
+    {
+      "name": "Tomiño Taberna Gallega",
+      "position": 42
+    },
+    {
+      "name": "C as in Charlie",
+      "position": 43
+    },
+    {
+      "name": "San Sabino",
+      "position": 44
+    },
+    {
+      "name": "Leitao",
+      "position": 45
+    },
+    {
+      "name": "Forgione",
+      "position": 46
+    },
+    {
+      "name": "Swoony's",
+      "position": 47
+    },
+    {
+      "name": "Saint Julivert Fisherie",
+      "position": 48
+    },
+    {
+      "name": "Family Meal at Blue Hill",
+      "position": 49
+    },
+    {
+      "name": "Il Mulino",
+      "position": 50
+    },
+    {
+      "name": "Kimura",
+      "position": 51
+    },
+    {
+      "name": "Overstory",
+      "position": 52
+    },
+    {
+      "name": "Noreetuh",
+      "position": 53
+    },
+    {
+      "name": "Sixty Three Clinton",
+      "position": 54
+    },
+    {
+      "name": "Houseman",
+      "position": 55
+    },
+    {
+      "name": "Thirteen Water",
+      "position": 56
+    },
+    {
+      "name": "St. Jardim",
+      "position": 57
+    },
+    {
+      "name": "Torien",
+      "position": 58
+    },
+    {
+      "name": "Sushi Lab - East Village",
+      "position": 59
+    },
+    {
+      "name": "al Badawi",
+      "position": 60
+    },
+    {
+      "name": "Kiko",
+      "position": 61
+    },
+    {
+      "name": "Rosemary's",
+      "position": 62
+    },
+    {
+      "name": "Roey's",
+      "position": 63
+    },
+    {
+      "name": "Loring Place",
+      "position": 64
+    },
+    {
+      "name": "Pasquale Jones",
+      "position": 65
+    },
+    {
+      "name": "Au Cheval - NYC",
+      "position": 66
+    },
+    {
+      "name": "Balthazar",
+      "position": 67
+    },
+    {
+      "name": "il Buco",
+      "position": 68
+    },
+    {
+      "name": "Kisa",
+      "position": 69
+    },
+    {
+      "name": "Bridges",
+      "position": 70
+    },
+    {
+      "name": "Smithereens",
+      "position": 71
+    },
+    {
+      "name": "schmuck.",
+      "position": 72
+    },
+    {
+      "name": "Ha's Snack Bar",
+      "position": 73
+    },
+    {
+      "name": "Bar Oliver",
+      "position": 74
+    },
+    {
+      "name": "Maison Passerelle",
+      "position": 75
+    },
+    {
+      "name": "Carbone",
+      "position": 76
+    },
+    {
+      "name": "Shuka",
+      "position": 77
+    },
+    {
+      "name": "Fish Cheeks NoHo",
+      "position": 78
+    },
+    {
+      "name": "Via Carota",
+      "position": 79
+    },
+    {
+      "name": "Manhatta",
+      "position": 80
+    },
+    {
+      "name": "Vic’s",
+      "position": 81
+    },
+    {
+      "name": "il Buco Alimentari e Vineria",
+      "position": 82
+    },
+    {
+      "name": "Llama San",
+      "position": 83
+    },
+    {
+      "name": "Wayla",
+      "position": 84
+    },
+    {
+      "name": "The Tyger",
+      "position": 85
+    },
+    {
+      "name": "Anton's",
+      "position": 86
+    },
+    {
+      "name": "Indochine",
+      "position": 87
+    },
+    {
+      "name": "One White Street",
+      "position": 88
+    },
+    {
+      "name": "Raines Law Room",
+      "position": 89
+    },
+    {
+      "name": "The Noortwyck",
+      "position": 90
+    },
+    {
+      "name": "Dante",
+      "position": 91
+    },
+    {
+      "name": "Sadelle's",
+      "position": 92
+    },
+    {
+      "name": "Thai Diner",
+      "position": 93
+    },
+    {
+      "name": "Tokyo Record Bar",
+      "position": 94
+    },
+    {
+      "name": "Clinton St. Baking Co",
+      "position": 95
+    },
+    {
+      "name": "Shoo Shoo",
+      "position": 96
+    },
+    {
+      "name": "Balaboosta",
+      "position": 97
+    },
+    {
+      "name": "Golden Diner",
+      "position": 98
+    },
+    {
+      "name": "Dante West Village",
+      "position": 99
+    },
+    {
+      "name": "PRANAKHON",
+      "position": 100
+    },
+    {
+      "name": "MAMO Restaurant",
+      "position": 101
+    },
+    {
+      "name": "Cecchi's",
+      "position": 102
+    },
+    {
+      "name": "Nowon East Village",
+      "position": 103
+    },
+    {
+      "name": "Vinegar Hill House",
+      "position": 104
+    },
+    {
+      "name": "Le Coucou",
+      "position": 105
+    },
+    {
+      "name": "Forsythia",
+      "position": 106
+    },
+    {
+      "name": "Jack & Charlie's 118",
+      "position": 107
+    },
+    {
+      "name": "Sartiano's",
+      "position": 108
+    },
+    {
+      "name": "Temple Bar",
+      "position": 109
+    },
+    {
+      "name": "The Commerce Inn",
+      "position": 110
+    },
+    {
+      "name": "Inga's Bar",
+      "position": 111
+    },
+    {
+      "name": "Yellow Rose",
+      "position": 112
+    },
+    {
+      "name": "Bobo NYC",
+      "position": 113
+    },
+    {
+      "name": "Sant Ambroeus - Soho",
+      "position": 114
+    },
+    {
+      "name": "ARIARI",
+      "position": 115
+    },
+    {
+      "name": "Please Don't Tell (PDT)",
+      "position": 116
+    },
+    {
+      "name": "Malaparte",
+      "position": 117
+    },
+    {
+      "name": "Bangkok Supper Club",
+      "position": 118
+    },
+    {
+      "name": "Bungalow",
+      "position": 119
+    }
+  ]
+}

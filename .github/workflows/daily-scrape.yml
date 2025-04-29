@@ -1,0 +1,35 @@
+name: Daily Scraping
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run at midnight UTC daily
+  workflow_dispatch:     # Allows manual triggering for testing
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          
+      - name: Install dependencies
+        run: npm install
+      
+      # Install Playwright and browsers
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+      
+      - name: Run scraper
+        run: node scraper.js
+      
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add data/
+          git commit -m "Daily data update" || echo "No changes to commit"
+          git push 

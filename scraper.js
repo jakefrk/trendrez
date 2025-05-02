@@ -7,9 +7,12 @@ function randomDelay(min = 500, max = 2000) { // 0.5 to 2 seconds default
 }
 
 async function scrapeClimbingList() {
-  console.log('Launching browser...');
+  console.log('Starting scraper...');
   // Keep headless: false for now if you still want to see it
-  const browser = await chromium.launch({ headless: false }); 
+  const browser = await chromium.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  }); 
   const page = await browser.newPage();
   const allRestaurants = []; // Array to hold restaurants from all pages
   let currentPage = 1;
@@ -112,8 +115,8 @@ async function scrapeClimbingList() {
     return allRestaurants;
     
   } catch (error) {
-    console.error('Error during scraping process:', error);
-    throw error;
+    console.error('Scraping error:', error);
+    process.exit(1);
   } finally {
     console.log('Closing browser...');
     await browser.close();

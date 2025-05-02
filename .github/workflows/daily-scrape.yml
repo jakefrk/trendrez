@@ -9,23 +9,30 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
+          
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgbm-dev libgtk-3-0 libasound2
           
       - name: Install dependencies
         run: npm install
       
-      # Install Playwright and browsers
       - name: Install Playwright browsers
-        run: npx playwright install chromium
+        run: npx playwright install chromium --with-deps
+      
+      - name: Ensure data directory exists
+        run: mkdir -p data
       
       - name: Run scraper
         run: node scraper.js
-      
+        
       - name: Commit and push changes
         run: |
           git config --global user.name 'GitHub Actions'

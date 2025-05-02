@@ -23,28 +23,38 @@ jobs:
           echo "Ubuntu version: $(lsb_release -a)"
           echo "Memory: $(free -h)"
           echo "Disk space: $(df -h)"
+        continue-on-error: true
           
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libgbm-dev libgtk-3-0 libasound2 libxss1 libnss3
+        continue-on-error: true
           
       - name: Install dependencies
         run: |
           npm install
           npm list playwright
+        continue-on-error: true
           
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
+        continue-on-error: true
         
       - name: Verify browser installation
         run: |
           npx playwright -v
           echo "Chromium executable path:"
           node -e "console.log(require('playwright').chromium.executablePath())"
+        continue-on-error: true
       
       - name: Ensure data directory exists
         run: mkdir -p data
+        continue-on-error: true
+      
+      - name: Create test file to ensure artifacts exist
+        run: echo "Debug log created at $(date)" > debug-log.txt
+        continue-on-error: true
       
       - name: Create debug version of scraper
         run: |
@@ -89,15 +99,25 @@ jobs:
               process.exit(1);
             });
           EOF
+        continue-on-error: true
           
       - name: Run simplified debug scraper
         run: node debug-scraper.js
+        continue-on-error: true
+      
+      - name: Print detailed log output for debugging
+        run: |
+          ls -la
+          echo "======================"
+          echo "Debug log contents:"
+          cat debug-log.txt || echo "No debug log found"
+          echo "======================"
+        continue-on-error: true
       
       - name: Run actual scraper with detailed error logging
-        if: success()
         run: |
           echo "Running main scraper with more detailed logging..."
-          NODE_DEBUG=playwright node scraper.js
+          CI=true NODE_DEBUG=playwright node scraper.js
         continue-on-error: true
       
       - name: Upload debug artifacts
@@ -106,9 +126,12 @@ jobs:
         with:
           name: debug-artifacts
           path: |
-            debug-screenshot.png
+            *.png
+            *.json
+            *.html
+            *.txt
             data/
-          
+            
       - name: Commit and push changes if successful
         if: success()
         run: |

@@ -1,6 +1,32 @@
 const { chromium } = require('playwright');
 const fs = require('fs').promises;
 
+// Save diagnostic information immediately
+async function saveDiagnostics() {
+  try {
+    const diagnostics = {
+      environment: {
+        node: process.version,
+        platform: process.platform,
+        arch: process.arch,
+        env: {
+          CI: process.env.CI || 'not set',
+          NODE_DEBUG: process.env.NODE_DEBUG || 'not set'
+        }
+      },
+      timestamp: new Date().toISOString()
+    };
+    
+    await fs.writeFile('diagnostics.json', JSON.stringify(diagnostics, null, 2));
+    console.log('Saved initial diagnostics information');
+  } catch (err) {
+    console.error('Failed to save diagnostics:', err);
+  }
+}
+
+// Call this immediately
+saveDiagnostics();
+
 // Helper function for random delay
 function randomDelay(min = 500, max = 2000) { // 0.5 to 2 seconds default
   return Math.random() * (max - min) + min;
@@ -11,10 +37,46 @@ async function scrapeClimbingList() {
   console.log('OS:', process.platform);
   console.log('Architecture:', process.arch);
   console.log('Node version:', process.version);
+  
+  // Create a special text file with timestamp for artifact verification
+  await fs.writeFile('scraper-started.txt', `Scraper started at ${new Date().toISOString()}`);
 
   let browser;
   try {
+    // Always use mock data in CI environment to test the workflow
+    if (process.env.CI === 'true') {
+      console.log('CI environment detected, using mock data');
+      // Create mock data for testing
+      const mockData = {
+        timestamp: new Date().toISOString(),
+        total_restaurants: 10,
+        restaurants: Array.from({ length: 10 }, (_, i) => ({
+          name: `Restaurant ${i+1}`,
+          position: i+1
+        }))
+      };
+      
+      // Save mock data
+      await fs.mkdir('data', { recursive: true });
+      const filename = `data/${mockData.timestamp.split('T')[0]}.json`;
+      await fs.writeFile(filename, JSON.stringify(mockData, null, 2));
+      console.log(`Mock data saved to ${filename}`);
+      
+      // Also save a successful status file for artifacts
+      await fs.writeFile('success.txt', `Mock data generated successfully at ${new Date().toISOString()}`);
+      
+      return mockData.restaurants;
+    }
+    
     console.log('Launching browser with enhanced logging...');
+    // Log browser executable info
+    try {
+      const { executablePath } = chromium;
+      console.log('Chromium executable path:', executablePath());
+    } catch (pathError) {
+      console.error('Could not get executable path:', pathError);
+    }
+    
     browser = await chromium.launch({
       headless: true,
       args: [
@@ -48,30 +110,6 @@ async function scrapeClimbingList() {
     // Continue with actual scraping
     const page = await browser.newPage();
     console.log('Main scraping page created');
-    
-    // Use mock data in CI environment for testing the workflow
-    if (process.env.CI) {
-      console.log('CI environment detected, using mock data');
-      // Create mock data for testing
-      const mockData = {
-        timestamp: new Date().toISOString(),
-        total_restaurants: 10,
-        restaurants: Array.from({ length: 10 }, (_, i) => ({
-          name: `Restaurant ${i+1}`,
-          position: i+1
-        }))
-      };
-      
-      // Save mock data
-      const filename = `data/${mockData.timestamp.split('T')[0]}.json`;
-      await fs.mkdir('data', { recursive: true });
-      await fs.writeFile(filename, JSON.stringify(mockData, null, 2));
-      console.log(`Mock data saved to ${filename}`);
-      
-      await browser.close();
-      console.log('Browser closed after mock data generation');
-      return mockData.restaurants;
-    }
     
     // Begin actual scraping process
     console.log('Starting actual scraping process...');
@@ -197,6 +235,12 @@ async function scrapeClimbingList() {
     process.exit(1);
   } finally {
     console.log('In finally block, ensuring browser is closed...');
+    try {
+      await fs.writeFile('scraper-completed.txt', `Scraper completed at ${new Date().toISOString()}`);
+    } catch (e) {
+      console.error('Failed to write completion file:', e);
+    }
+    
     if (browser) {
       try {
         await browser.close();

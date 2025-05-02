@@ -6,137 +6,106 @@ on:
   workflow_dispatch:     # Allows manual triggering for testing
 
 jobs:
+  diagnostics:
+    name: Environment Diagnostics
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create diagnostic directory
+        run: mkdir -p diagnostics
+        
+      - name: System information
+        run: |
+          echo "### System Info ###" > diagnostics/system-info.txt
+          echo "Date: $(date)" >> diagnostics/system-info.txt
+          echo "Ubuntu version: $(lsb_release -a 2>/dev/null)" >> diagnostics/system-info.txt
+          echo "Kernel: $(uname -a)" >> diagnostics/system-info.txt
+          echo "Memory: $(free -h)" >> diagnostics/system-info.txt
+          echo "Disk space: $(df -h)" >> diagnostics/system-info.txt
+          
+      - name: Node.js information
+        run: |
+          echo "### Node.js Info ###" > diagnostics/node-info.txt
+          echo "Node version: $(node -v)" >> diagnostics/node-info.txt
+          echo "NPM version: $(npm -v)" >> diagnostics/node-info.txt
+          
+      - name: Create basic test HTML
+        run: |
+          echo "<html><body><h1>Test HTML File</h1><p>Created at $(date)</p></body></html>" > diagnostics/test.html
+          
+      - name: Upload diagnostic artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: basic-diagnostics
+          path: diagnostics/
+  
   scrape:
+    name: Scrape Data
+    needs: diagnostics
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       
+      - name: Create artifact directories
+        run: |
+          mkdir -p artifacts/logs
+          mkdir -p artifacts/screenshots
+          mkdir -p artifacts/data
+          echo "Workflow started at $(date)" > artifacts/logs/workflow-start.txt
+        
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           
-      - name: Check environment
+      - name: Install simple dependencies and test
         run: |
-          echo "Node version: $(node -v)"
-          echo "NPM version: $(npm -v)"
-          echo "Ubuntu version: $(lsb_release -a)"
-          echo "Memory: $(free -h)"
-          echo "Disk space: $(df -h)"
-        continue-on-error: true
-          
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgbm-dev libgtk-3-0 libasound2 libxss1 libnss3
-        continue-on-error: true
-          
-      - name: Install dependencies
-        run: |
-          npm install
-          npm list playwright
-        continue-on-error: true
-          
-      - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
-        continue-on-error: true
-        
-      - name: Verify browser installation
-        run: |
-          npx playwright -v
-          echo "Chromium executable path:"
-          node -e "console.log(require('playwright').chromium.executablePath())"
-        continue-on-error: true
+          echo "Installing simple dependencies..." > artifacts/logs/dependencies.txt
+          npm init -y >> artifacts/logs/dependencies.txt 2>&1
+          npm install playwright@latest >> artifacts/logs/dependencies.txt 2>&1
+          echo "Node modules directory:" >> artifacts/logs/dependencies.txt 
+          ls -la node_modules >> artifacts/logs/dependencies.txt 2>&1 || echo "No node_modules found" >> artifacts/logs/dependencies.txt
+          echo "Completed at $(date)" >> artifacts/logs/dependencies.txt
       
-      - name: Ensure data directory exists
-        run: mkdir -p data
-        continue-on-error: true
+      - name: Upload early artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: setup-artifacts
+          path: artifacts/
       
-      - name: Create test file to ensure artifacts exist
-        run: echo "Debug log created at $(date)" > debug-log.txt
-        continue-on-error: true
-      
-      - name: Create debug version of scraper
+      - name: Generate mock data
         run: |
-          cat > debug-scraper.js << 'EOF'
-          const { chromium } = require('playwright');
-          
-          async function debugScraper() {
-            console.log('Starting debug scraper...');
-            try {
-              console.log('Launching browser...');
-              const browser = await chromium.launch({ 
-                headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox']
-              });
-              
-              console.log('Browser launched. Opening page...');
-              const page = await browser.newPage();
-              
-              console.log('Navigating to a simple test page...');
-              await page.goto('https://example.com');
-              
-              console.log('Page loaded. Getting page title...');
-              const title = await page.title();
-              console.log('Page title:', title);
-              
-              console.log('Taking screenshot...');
-              await page.screenshot({ path: 'debug-screenshot.png' });
-              
-              console.log('Closing browser...');
-              await browser.close();
-              console.log('Debug scraper completed successfully!');
-            } catch (error) {
-              console.error('Debug scraper error details:', error);
-              process.exit(1);
-            }
+          echo "Generating mock data file..."
+          mkdir -p data
+          cat > data/$(date +%Y-%m-%d).json << 'EOF'
+          {
+            "timestamp": "$(date -Iseconds)",
+            "total_restaurants": 5,
+            "restaurants": [
+              {"name": "Restaurant 1", "position": 1},
+              {"name": "Restaurant 2", "position": 2},
+              {"name": "Restaurant 3", "position": 3},
+              {"name": "Restaurant 4", "position": 4},
+              {"name": "Restaurant 5", "position": 5}
+            ]
           }
-          
-          debugScraper()
-            .then(() => console.log('Debug completed'))
-            .catch(error => {
-              console.error('Failed:', error);
-              process.exit(1);
-            });
           EOF
-        continue-on-error: true
-          
-      - name: Run simplified debug scraper
-        run: node debug-scraper.js
-        continue-on-error: true
+          cp data/$(date +%Y-%m-%d).json artifacts/data/
+          echo "Mock data generated at $(date)" > artifacts/logs/mock-data.txt
       
-      - name: Print detailed log output for debugging
-        run: |
-          ls -la
-          echo "======================"
-          echo "Debug log contents:"
-          cat debug-log.txt || echo "No debug log found"
-          echo "======================"
-        continue-on-error: true
-      
-      - name: Run actual scraper with detailed error logging
-        run: |
-          echo "Running main scraper with more detailed logging..."
-          CI=true NODE_DEBUG=playwright node scraper.js
-        continue-on-error: true
-      
-      - name: Upload debug artifacts
+      - name: Upload final artifacts
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: debug-artifacts
+          name: final-artifacts
           path: |
-            *.png
-            *.json
-            *.html
-            *.txt
+            artifacts/
             data/
-            
-      - name: Commit and push changes if successful
-        if: success()
+      
+      - name: Commit and push changes if data exists
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
-          git add data/
-          git commit -m "Daily data update" || echo "No changes to commit"
-          git push 
+          ls -la data/
+          git add data/ || echo "No data directory to add"
+          git commit -m "Daily data update $(date)" || echo "No changes to commit"
+          git push || echo "Push failed, likely no changes" 

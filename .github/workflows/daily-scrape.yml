@@ -30,8 +30,10 @@ jobs:
       - name: Ensure data directory exists
         run: mkdir -p data
       
-      - name: Run scraper
-        run: node scraper.js
+      - name: Run scraper with debug
+        run: |
+          echo "Running scraper..."
+          node scraper.js
         
       - name: Commit and push changes
         run: |

@@ -1,6 +1,7 @@
 name: Daily Data Update
 
 on:
+  push:
   schedule:
     - cron: '0 0 * * *'  # Run at midnight UTC daily
   workflow_dispatch:     # Allows manual triggering for testing

@@ -68,13 +68,14 @@ async function scrapeClimbingList() {
       return mockData.restaurants;
     }
     
-    console.log('Launching browser with enhanced logging...');
+    console.log('Launching chrome browser with enhanced logging...');
     // Log browser executable info
     try {
+       console.log('finding exectuable path');
       const { executablePath } = chromium;
       console.log('Chromium executable path:', executablePath());
-    } catch (pathError) {
-      console.error('Could not get executable path:', pathError);
+    } catch (e) {
+      console.error('Could not get executable path:', e);
     }
     
     browser = await chromium.launch({
